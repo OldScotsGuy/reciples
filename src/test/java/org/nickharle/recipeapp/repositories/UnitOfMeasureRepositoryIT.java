@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)    // Starts Spring Context
-@DataJpaTest                   // Brings up an embedded database
+@DataJpaTest                    // Brings up an embedded database
 public class UnitOfMeasureRepositoryIT {
 
     @Autowired                  // Can use @Autowird as the context will start

@@ -60,6 +60,28 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>     <!-- Surefire plugin runs unit tests and comes in by default -->
+                <artifactId>maven-failsafe-plugin</artifactId>  <!-- Load plugin for integration tests-->
+                <!-- <version>2.20</version> -->
+                <configuration>
+                    <includes>
+                        <include>**/*IT.java</include>          <!-- Assumes names of integration tests  end in IT-->
+                    </includes>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+                    </additionalClasspathElements>
+                    <parallel>none</parallel>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>                 <!-- Integration tests run with verify maven goal -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
