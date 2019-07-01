@@ -8,14 +8,16 @@ import org.nickharle.recipeapp.domain.Recipe;
 import org.nickharle.recipeapp.repositories.RecipeRepository;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class RecipeServiceImplementationTest {
 
-    RecipeServiceImplementation recipeServiceImplementation;
+    RecipeServiceImplementation recipeService;
 
     @Mock
     RecipeRepository recipeRepository;
@@ -23,11 +25,26 @@ public class RecipeServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);     // Initialise mocks
-        recipeServiceImplementation = new RecipeServiceImplementation(recipeRepository);
+        recipeService = new RecipeServiceImplementation(recipeRepository);
+    }
+
+
+    @Test
+    public void getRecipeByIdTest() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+        assertNotNull("Null recipe returned", recipeReturned);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
     }
 
     @Test
-    public void getRecipes() {
+    public void getRecipesTest() {
 
         // Set up HashSet
         Recipe recipe = new Recipe();
@@ -37,7 +54,7 @@ public class RecipeServiceImplementationTest {
         // Tell Mockito to return recipleData when a call is made to the recipeRepository.findAll
         when(recipeRepository.findAll()).thenReturn(recipeData);
 
-        Set<Recipe> recipes = recipeServiceImplementation.getRecipes();
+        Set<Recipe> recipes = recipeService.getRecipes();
         assertEquals(recipes.size(), 1);
 
         // Verify that the recipeRepository findAll method is called only once
