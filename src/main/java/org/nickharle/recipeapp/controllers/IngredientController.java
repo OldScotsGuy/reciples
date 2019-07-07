@@ -2,6 +2,8 @@ package org.nickharle.recipeapp.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.nickharle.recipeapp.commands.IngredientCommand;
+import org.nickharle.recipeapp.commands.RecipeCommand;
+import org.nickharle.recipeapp.commands.UnitOfMeasureCommand;
 import org.nickharle.recipeapp.services.IngredientService;
 import org.nickharle.recipeapp.services.RecipeService;
 import org.nickharle.recipeapp.services.UnitOfMeasureService;
@@ -17,7 +19,10 @@ public class IngredientController {
     IngredientService ingredientService;
     UnitOfMeasureService unitOfMeasureService;
 
-    public IngredientController(RecipeService recipeService, IngredientService ingredientService, UnitOfMeasureService unitOfMeasureService) {
+    public IngredientController(RecipeService recipeService,
+                                IngredientService ingredientService,
+                                UnitOfMeasureService unitOfMeasureService) {
+
         this.recipeService = recipeService;
         this.ingredientService = ingredientService;
         this.unitOfMeasureService = unitOfMeasureService;
@@ -40,6 +45,26 @@ public class IngredientController {
                                        @PathVariable String id, Model model) {
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
         return "recipe/ingredient/show";
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newRecipeIngredient(@PathVariable String recipeId, Model model) {
+
+        // Make sure we have a good recipe ID
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        // todo raise exception if null
+
+        // Need to return parent id for hidden form property
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        // Init uom
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        return "recipe/ingredient/ingredientform";
     }
 
     @GetMapping
