@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @Controller
 public class RecipeController {
 
-    private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
+    private static final String RECIPE_RECIPEFORM_URL = "/recipe/recipeform";
     private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
