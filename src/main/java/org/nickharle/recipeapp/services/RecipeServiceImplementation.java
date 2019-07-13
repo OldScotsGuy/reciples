@@ -5,6 +5,7 @@ import org.nickharle.recipeapp.commands.RecipeCommand;
 import org.nickharle.recipeapp.converters.RecipeCommandToRecipe;
 import org.nickharle.recipeapp.converters.RecipeToRecipeCommand;
 import org.nickharle.recipeapp.domain.Recipe;
+import org.nickharle.recipeapp.exceptions.NotFoundException;
 import org.nickharle.recipeapp.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,8 @@ public class RecipeServiceImplementation implements RecipeService {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
         if(!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe not found");
+            // throw new RuntimeException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
         return recipeOptional.get();
     }
