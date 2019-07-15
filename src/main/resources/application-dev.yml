@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/sfg_dev
+    username: sfg_dev_user
+    # Prefer to use an Environment Variable for password or encryption in a production environment
+    password: guru
+  jpa:
+    hibernate:
+      # Prevent hibernate from making DDL changes - but validate will make it check the database schema
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    # Will ensure the SQL statements are shown in the console
+    show-sql: true
