@@ -47,8 +47,8 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
 
-      #- codecov/upload:
-      #    file: target/site/jacoco
-      - run:
-          name: Send to CodeCov
-          command: bash <(curl -s https://codecov.io/bash)
+      - codecov/upload:
+          file: target/site/jacoco/jacoco.xml
+      #- run:
+      #    name: Send to CodeCov
+      #    command: bash <(curl -s https://codecov.io/bash)
