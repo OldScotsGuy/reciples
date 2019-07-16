@@ -46,5 +46,5 @@ jobs:
       #    path: target/surefire-reports
 
       - codecov/upload:
-          file:
+          file: target
           #file: target/surefire-reports
