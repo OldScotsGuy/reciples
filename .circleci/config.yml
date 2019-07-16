@@ -42,8 +42,9 @@ jobs:
       # run tests! and gen code coverage
       - run: mvn integration-test cobertura:cobertura
 
-      - store_test_results:
-          path: target/surefire-reports
+      #- store_test_results:
+      #    path: target/surefire-reports
 
       - codecov/upload:
-          file: target/surefire-reports
+          file:
+          #file: target/surefire-reports
