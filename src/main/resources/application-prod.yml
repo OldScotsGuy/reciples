@@ -4,6 +4,7 @@ spring:
     username: sfg_prod_user
     # Prefer to use an Environment Variable for password or encryption in a production environment
     password: guru
+    platform: mysql
   jpa:
     hibernate:
       # Prevent hibernate from making DDL changes - but validate will make it check the database schema
