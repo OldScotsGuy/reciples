@@ -24,6 +24,9 @@ public class CategoryTest {
 
     @Test
     public void getDescription() {
+        String desc="Americano";
+        category.setDescription(desc);
+        assertEquals(desc, category.getDescription());
     }
 
     @Test
